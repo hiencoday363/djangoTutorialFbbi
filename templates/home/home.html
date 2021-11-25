@@ -1,0 +1,104 @@
+{% extends 'home/base.html' %}
+{% block title %}Event Home Page{% endblock %}
+{% block body %}
+    <div class="container">
+        <div>
+            <h1>Hello {{ user_ }}!!!</h1>
+            <a class="nav-link" href="{% url 'index_oauth' %}">Home page</a>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Body</th>
+                <th scope="col"></th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in events %}
+                <tr>
+                    <th scope="row">{{ item.id }}</th>
+                    <td>{{ item.title }}</td>
+                    <td>{{ item.body }}</td>
+                    <td>
+                        <button
+                                type="button"
+                                class="btn btn-link click_detail"
+                                event-id="{{ item.id }}"
+                        >
+                            Detail
+                        </button>
+                    </td>
+
+                    <td>
+                        <button class="btn btn-link click_delete" event-id="{{ item.id }}">Delete</button>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+        <!-- Button trigger modal -->
+
+
+{#        <!-- Modal -->#}
+        <div
+                class="modal fade"
+                id="staticBackdrop"
+                data-mdb-backdrop="static"
+                data-mdb-keyboard="false"
+                tabindex="-1"
+                aria-labelledby="staticBackdropLabel"
+                aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="title-update">
+                            Update Event
+                        </h5>
+                        <button
+                                type="button"
+                                class="btn-close"
+                                data-mdb-dismiss="modal"
+                                aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form-update">
+                            <!-- title input -->
+                            <div class="form-outline mb-4">
+                                <input required type="text" class="form-control" name="title"/>
+                                <label class="form-label">Title</label>
+                            </div>
+
+{#                            <!-- body input -->#}
+                            <div class="form-outline mb-4">
+                                <input required type="text" class="form-control" name="body"/>
+                                <label class="form-label">Body</label>
+                            </div>
+                            <!-- input hidden -->
+                            <input type="text" hidden name="client_id">
+                            <input type="text" hidden name="id">
+                            <input type="text" hidden name="type">
+
+                            <!-- Submit button -->
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+                                    Close
+                                </button>
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Button trigger modal -->
+
+    </div>
+{% endblock %}
